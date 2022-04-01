@@ -2,10 +2,30 @@
   margin-top: 30px;
 }
 
+.product{
+  border-bottom: .5px solid rgb(228, 228, 228);
+  padding-bottom: 10px;
+}
+
 .product-details {
-  margin-bottom: 50px;
   text-align: center;
-  p:nth-child(2){
-    background-color: rgb(243, 243, 243);
-  }
+}
+
+.product-sizes {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+
+  .product-size {
+    background-color: rgb(247, 247, 247);
+    height: 50px;
+    width: 50px;
+    border-radius: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+    }
 }

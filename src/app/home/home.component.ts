@@ -1,4 +1,9 @@
 import { Component, HostListener, OnInit } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+import { take } from 'rxjs/operators';
+import { APIResponse } from 'src/shared/interfaces/api-response.interface';
+import { Product } from 'src/shared/interfaces/product.interface';
+import { ProductsService } from 'src/shared/services/products.service';
 
 @Component({
   selector: 'app-home',
@@ -6,21 +11,51 @@ import { Component, HostListener, OnInit } from '@angular/core';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  public products = [1, 2];
+  /**
+   * List of products for template
+   */
+  public products$ = new BehaviorSubject<Product[]>([]);
 
-  constructor() {}
+  /**
+   * Constructor
+   *
+   * @param products
+   */
+  constructor(private products: ProductsService) {}
 
-  ngOnInit(): void {}
+  /**
+   * Initial component
+   */
+  ngOnInit(): void {
+    this.getProducts();
+  }
 
+  /**
+   * Detect when scroll bottom finish
+   */
   @HostListener('window:scroll', [])
   onScroll(): void {
     if (this.bottomReached()) {
-      this.products = [...this.products, 1, 2, 3];
     }
   }
 
+  /**
+   * Verify if scroll is in bottom
+   * @returns
+   */
   private bottomReached(): boolean {
     return window.innerHeight + window.scrollY >= document.body.offsetHeight;
   }
-}
 
+  /**
+   * Get all products
+   */
+  private getProducts() {
+    this.products
+      .index()
+      .pipe(take(1))
+      .subscribe((response: APIResponse) => {
+        this.products$.next(response.meta.results.data);
+      });
+  }
+}
