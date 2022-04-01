@@ -23,7 +23,7 @@ export class ProductsService {
    * Get all products
    * @returns
    */
-  public index(): Observable<any> {
-    return this.httpClient.get(`${this.api}/produtos`);
+  public index(page: number): Observable<any> {
+    return this.httpClient.get(`${this.api}/produtos?page=${page}`);
   }
 }

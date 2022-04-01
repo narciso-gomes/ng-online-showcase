@@ -1,6 +1,7 @@
+import { Pagination } from './../../shared/interfaces/pagination.interface';
 import { Component, HostListener, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { take } from 'rxjs/operators';
+import { finalize, take } from 'rxjs/operators';
 import { APIResponse } from 'src/shared/interfaces/api-response.interface';
 import { Product } from 'src/shared/interfaces/product.interface';
 import { ProductsService } from 'src/shared/services/products.service';
@@ -15,6 +16,10 @@ export class HomeComponent implements OnInit {
    * List of products for template
    */
   public products$ = new BehaviorSubject<Product[]>([]);
+
+  private pagination: any;
+
+  public isLoading = false;
 
   /**
    * Constructor
@@ -36,6 +41,13 @@ export class HomeComponent implements OnInit {
   @HostListener('window:scroll', [])
   onScroll(): void {
     if (this.bottomReached()) {
+      this.pagination.current_page += 1;
+      if (
+        this.pagination.current_page <= this.pagination.last_page &&
+        !this.isLoading
+      ) {
+        this.getProducts(this.pagination.current_page);
+      }
     }
   }
 
@@ -50,12 +62,18 @@ export class HomeComponent implements OnInit {
   /**
    * Get all products
    */
-  private getProducts() {
+  private getProducts(page = 1) {
+    this.isLoading = true;
     this.products
-      .index()
-      .pipe(take(1))
+      .index(page)
+      .pipe(
+        take(1),
+        finalize(() => (this.isLoading = false))
+      )
       .subscribe((response: APIResponse) => {
-        this.products$.next(response.meta.results.data);
+        this.products$.next(this.products$.value.concat(response.meta.results.data));
+        console.log(this.products$.value)
+        this.pagination = response.meta.results;
       });
   }
 }
