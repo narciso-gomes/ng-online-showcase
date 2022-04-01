@@ -1,3 +1,25 @@
 <main class="container">
   <app-nav-bar></app-nav-bar>
+
+  <div class="images">
+    <div class="row">
+      <ng-container *ngFor="let item of products">
+        <div class="col-lg-4 col-md-12 mb-4 mb-lg-0 product">
+          <img
+            class="w-100 h-auto d-block lazy"
+            src="https://images2.marisa.com.br/medias/sys_master/images/images/hbe/h82/13433573507102/SANDALIA-FEM-HOLLYWOOD-DAKO-ROS-38-10051183370-C1.jpg"
+            alt="Image_Sandália Salto Grosso Feminina Amarração Dakota"
+            itemprop="image"
+            width="517"
+            height="620"
+          />
+
+          <div class="product-details">
+            <p>Sandália Salto Grosso Feminina Amarração Dakota</p>
+            <p>Em estoque</p>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
 </main>

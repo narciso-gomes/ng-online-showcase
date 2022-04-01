@@ -1,3 +1,11 @@
-.main {
-  background-color: red;
+.images {
+  margin-top: 30px;
+}
+
+.product-details {
+  margin-bottom: 50px;
+  text-align: center;
+  p:nth-child(2){
+    background-color: rgb(243, 243, 243);
+  }
 }
