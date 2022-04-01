@@ -1,0 +1,14 @@
+.navbar {
+  border: 0.5px solid rgb(226, 226, 226);
+
+  .img-fluid {
+    max-width: 300px;
+  }
+}
+
+// Small devices (landscape phones, 576px and up)
+@media (max-width: 576px) {
+  .img-fluid {
+    width: 250px;
+  }
+}
